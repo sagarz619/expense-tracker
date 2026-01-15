@@ -5,6 +5,19 @@ use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 
+// Debug route - check configuration (remove after setup)
+Route::get('/check-config', function () {
+    return '<pre>' .
+        'PHP Version: ' . phpversion() . '<br>' .
+        'APP_ENV: ' . env('APP_ENV', 'NOT SET') . '<br>' .
+        'APP_DEBUG: ' . (env('APP_DEBUG') ? 'true' : 'false') . '<br>' .
+        'APP_KEY: ' . (env('APP_KEY') ? 'SET' : 'NOT SET') . '<br>' .
+        'DB_HOST: ' . env('DB_HOST', 'NOT SET') . '<br>' .
+        'DB_DATABASE: ' . env('DB_DATABASE', 'NOT SET') . '<br>' .
+        'DB_USERNAME: ' . env('DB_USERNAME', 'NOT SET') . '<br>' .
+        '</pre>';
+});
+
 // Setup route for initial deployment (remove after setup)
 Route::get('/setup-database', function () {
     try {
