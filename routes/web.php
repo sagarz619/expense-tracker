@@ -3,6 +3,22 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Artisan;
+
+// Setup route for initial deployment (remove after setup)
+Route::get('/setup-database', function () {
+    try {
+        Artisan::call('migrate', ['--force' => true]);
+        $migrateOutput = Artisan::output();
+
+        Artisan::call('db:seed', ['--force' => true]);
+        $seedOutput = Artisan::output();
+
+        return '<pre>Migration Output:<br>' . $migrateOutput . '<br><br>Seed Output:<br>' . $seedOutput . '<br><br>Database setup complete!</pre>';
+    } catch (\Exception $e) {
+        return '<pre>Error: ' . $e->getMessage() . '<br><br>File: ' . $e->getFile() . '<br>Line: ' . $e->getLine() . '</pre>';
+    }
+});
 
 // Redirect root to dashboard
 Route::get('/', function () {
